@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode Result</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Barcode Result</h1>
+        <p id="result">Loading...</p>
+        <button id="back-to-scan">Back to Scan</button>
+    </div>
+    <footer>
+        &copy; 2025 Your Company. All rights reserved.
+    </footer>
+    <script>
+        // Load result from LocalStorage
+        const resultElement = document.getElementById('result');
+        const barcodeResult = localStorage.getItem('barcodeResult');
+
+        if (barcodeResult) {
+            resultElement.textContent = `Scanned Result: ${barcodeResult}`;
+        } else {
+            resultElement.textContent = 'No result found.';
+        }
+
+        // Navigate back to scan page
+        document.getElementById('back-to-scan').addEventListener('click', () => {
+            window.location.href = 'scan.html';
+        });
+    </script>
+</body>
+</html>
