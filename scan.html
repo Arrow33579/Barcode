@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Barcode</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Scan Barcode</h1>
+        <video id="video" width="300" height="200" autoplay></video>
+        <button id="show-result">Show Result</button>
+    </div>
+    <footer>
+        &copy; 2025 Your Company. All rights reserved.
+    </footer>
+    <script src="https://unpkg.com/@zxing/library@latest"></script>
+    <script>
+        const codeReader = new ZXing.BrowserBarcodeReader();
+        const videoElement = document.getElementById('video');
+        const resultButton = document.getElementById('show-result');
+        let scannedResult = '';
+
+        // Start barcode scanning
+        codeReader.decodeFromVideoDevice(null, 'video', (result, err) => {
+            if (result) {
+                scannedResult = result.text; // Store the result
+                console.log(scannedResult);
+            }
+            if (err && !(err instanceof ZXing.NotFoundException)) {
+                console.error(err);
+            }
+        });
+
+        // Navigate to result page with the result
+        resultButton.addEventListener('click', () => {
+            if (scannedResult) {
+                // Save result in LocalStorage
+                localStorage.setItem('barcodeResult', scannedResult);
+                // Navigate to result page
+                window.location.href = 'result.html';
+            } else {
+                alert('No barcode scanned yet!');
+            }
+        });
+    </script>
+</body>
+</html>
